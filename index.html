@@ -1,0 +1,3900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075cff">
+
+<title>AFRITECK PLUS - Online Shop</title>
+
+<style>
+
+:root{
+    --blue:#075cff;
+    --white:#ffffff;
+    --black:#111111;
+    --light:#f5f7fb;
+    --border:#dfe4ec;
+
+    --logo-width:260px;
+    --logo-height:110px;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:#111;
+}
+
+body.dark{
+    background:#121212;
+    color:#ffffff;
+}
+
+body.dark header,
+body.dark .category-nav{
+    background:#181818;
+}
+
+body.dark .category-nav button{
+    color:#ffffff;
+}
+
+body.dark .category-nav button:hover{
+    background:#2b2b2b;
+    color:#ffffff;
+}
+
+body.dark .product-card,
+body.dark .modal-box,
+body.dark .panel,
+body.dark .account-menu{
+    background:#202020;
+    color:#ffffff;
+    border-color:#444;
+}
+
+body.dark .product-info h3,
+body.dark .section-title,
+body.dark .modal-box h2,
+body.dark .modal-box p,
+body.dark .modal-box strong,
+body.dark .account-menu button{
+    color:#ffffff;
+}
+
+body.dark .short-description{
+    color:#dddddd;
+}
+
+body.dark .account-menu button:hover{
+    background:#333;
+    color:#ffffff;
+}
+
+body.dark input,
+body.dark select{
+    background:#292929;
+    color:#ffffff;
+    border-color:#555;
+}
+
+body.dark .cart-row{
+    border-color:#555;
+    color:#ffffff;
+}
+
+body.dark .bank-box{
+    background:#292929;
+    border-color:#555;
+    color:#ffffff;
+}
+
+body.dark .info-box{
+    background:#182b4d;
+    color:#ffffff;
+}
+
+body.dark .warning-box{
+    background:#493d1d;
+    color:#ffffff;
+}
+
+body.dark .product-image,
+body.dark .detail-image{
+    background:#292929;
+}
+
+/* LOADING SCREEN */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#fff;
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+body.dark #loader{
+    background:#121212;
+}
+
+.spinner{
+    width:65px;
+    height:65px;
+    border:7px solid #dce8ff;
+    border-top:7px solid var(--blue);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.header-inner{
+    min-height:125px;
+    display:flex;
+    align-items:center;
+    padding:8px 15px;
+}
+
+.logo-area{
+    width:var(--logo-width);
+    height:var(--logo-height);
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    flex-shrink:0;
+}
+
+.logo-area img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:left center;
+    display:block;
+}
+
+/* TOP RIGHT BUTTONS */
+
+.header-right{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.top-btn{
+    border:0;
+    border-radius:8px;
+    padding:12px 17px;
+    background:var(--blue);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.top-btn.options{
+    background:#111;
+}
+
+.cart-count{
+    background:#fff;
+    color:var(--blue);
+    padding:2px 7px;
+    border-radius:20px;
+    margin-left:4px;
+}
+
+/* CATEGORY BUTTONS */
+
+.category-nav{
+    background:#fff;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    padding:9px 12px;
+    border-top:1px solid #eee;
+}
+
+.category-nav button{
+    background:transparent;
+    border:0;
+    color:#111;
+    font-weight:bold;
+    padding:9px 13px;
+    cursor:pointer;
+    border-radius:7px;
+}
+
+.category-nav button:hover{
+    background:#eaf1ff;
+    color:var(--blue);
+}
+
+/* SLIDESHOW */
+
+.hero{
+    background:#111;
+}
+
+.slideshow{
+    position:relative;
+    height:350px;
+    overflow:hidden;
+    background:#111;
+}
+
+.slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity .8s ease;
+}
+
+.slide.active{
+    opacity:1;
+}
+
+.slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.hero-text{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#fff;
+    background:rgba(0,0,0,.30);
+}
+
+.hero-text h1{
+    font-size:clamp(30px,6vw,58px);
+    margin:0 0 10px;
+}
+
+.hero-text p{
+    font-size:clamp(15px,2vw,22px);
+}
+
+/* MAIN */
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:25px 14px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+/* PRODUCT GRID */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
+
+.product-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.product-image{
+    height:200px;
+    background:#eef2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+
+.product-info{
+    padding:14px;
+}
+
+.product-info h3{
+    margin:0 0 8px;
+    font-size:18px;
+}
+
+.short-description{
+    min-height:45px;
+    font-size:14px;
+    color:#555;
+}
+
+.price{
+    color:var(--blue);
+    font-size:20px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+/* COLOUR SELECTOR */
+
+.color-box{
+    margin:10px 0;
+}
+
+.color-box label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.color-box select{
+    width:100%;
+    padding:9px;
+    border:1px solid #bbb;
+    border-radius:7px;
+}
+
+/* PRODUCT BUTTONS */
+
+.product-actions{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.product-actions button{
+    flex:1;
+    padding:10px;
+    border:0;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.view-btn{
+    background:#111;
+    color:#fff;
+}
+
+.add-btn{
+    background:var(--blue);
+    color:#fff;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    background:rgba(0,0,0,.7);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+.modal-box{
+    background:#fff;
+    width:min(620px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:14px;
+    padding:22px;
+    color:#111;
+}
+
+.close{
+    float:right;
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* PRODUCT DETAILS */
+
+.detail-image{
+    height:280px;
+    background:#eef2f7;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.detail-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+/* FORMS */
+
+form{
+    display:grid;
+    gap:10px;
+}
+
+input,
+select{
+    width:100%;
+    padding:11px;
+    border:1px solid #bbb;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.form-btn{
+    width:100%;
+    border:0;
+    border-radius:8px;
+    padding:12px;
+    cursor:pointer;
+    font-weight:bold;
+    background:var(--blue);
+    color:#fff;
+    margin-top:5px;
+}
+
+.black-btn{
+    background:#111;
+}
+
+/* CART */
+
+.cart-list{
+    display:grid;
+    gap:10px;
+}
+
+.cart-row{
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.quantity button{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:6px;
+    background:var(--blue);
+    color:#fff;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.total{
+    text-align:right;
+    font-size:21px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.cart-actions{
+    display:grid;
+    gap:9px;
+    margin-top:15px;
+}
+
+/* ACCOUNT MENU */
+
+.account-menu{
+    position:fixed;
+    right:12px;
+    top:75px;
+    width:250px;
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:12px;
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+    z-index:4000;
+    padding:8px;
+}
+
+.account-menu button{
+    width:100%;
+    text-align:left;
+    border:0;
+    background:transparent;
+    padding:12px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#111;
+}
+
+.account-menu button:hover{
+    background:#eaf1ff;
+    color:var(--blue);
+}
+
+/* INFORMATION */
+
+.info-box{
+    background:#eef4ff;
+    border-left:4px solid var(--blue);
+    padding:12px;
+    border-radius:6px;
+    margin:10px 0;
+}
+
+.warning-box{
+    background:#fff3d2;
+    border-left:4px solid #d99a00;
+    padding:12px;
+    border-radius:6px;
+    margin:10px 0;
+}
+
+.bank-box{
+    background:#f1f1f1;
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.8;
+}
+
+.order-box{
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:14px;
+    margin:10px 0;
+}
+
+/* BEAUTIFUL MESSAGE BOX */
+
+.message-overlay{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    background:rgba(0,0,0,.65);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.message-box{
+    width:min(430px,100%);
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 15px 50px rgba(0,0,0,.35);
+    text-align:center;
+    overflow:hidden;
+}
+
+body.dark .message-box{
+    background:#202020;
+    color:#fff;
+}
+
+.message-top{
+    background:var(--blue);
+    color:#fff;
+    padding:22px 15px;
+}
+
+.message-top h3{
+    margin:0;
+    font-size:22px;
+}
+
+.message-content{
+    padding:24px 20px 10px;
+    color:#222;
+    font-size:16px;
+    line-height:1.5;
+}
+
+body.dark .message-content{
+    color:#fff;
+}
+
+.message-ok{
+    width:calc(100% - 40px);
+    margin:10px 20px 20px;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    background:var(--blue);
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.message-ok:hover{
+    background:#0048d8;
+}
+
+/* FOOTER */
+
+footer{
+    background:#111;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:35px;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    :root{
+        --logo-width:200px;
+        --logo-height:85px;
+    }
+
+    .header-inner{
+        min-height:95px;
+        padding:5px 9px;
+    }
+
+    .top-btn{
+        padding:10px 11px;
+        font-size:13px;
+    }
+
+    .slideshow{
+        height:220px;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .product-image{
+        height:145px;
+    }
+
+    .product-info{
+        padding:10px;
+    }
+
+    .product-info h3{
+        font-size:15px;
+    }
+
+    .short-description{
+        font-size:12px;
+    }
+
+    .price{
+        font-size:17px;
+    }
+
+    .product-actions{
+        display:grid;
+    }
+
+    .category-nav{
+        gap:2px;
+    }
+
+    .category-nav button{
+        padding:7px 8px;
+        font-size:12px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOADING SCREEN -->
+
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="header-inner">
+
+        <div class="logo-area">
+
+            <img
+                src="1791132996894.png"
+                alt="AFRITECK PLUS Logo"
+            >
+
+        </div>
+
+        <div class="header-right">
+
+            <button
+                class="top-btn"
+                onclick="openCart()"
+            >
+                Cart
+                <span
+                    class="cart-count"
+                    id="cartCount"
+                >0</span>
+            </button>
+
+            <button
+                class="top-btn options"
+                onclick="toggleAccountMenu()"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav class="category-nav">
+
+        <button onclick="showCategory('all')">
+            All
+        </button>
+
+        <button onclick="showCategory('phones')">
+            Phones
+        </button>
+
+        <button onclick="showCategory('laptops')">
+            Laptops
+        </button>
+
+        <button onclick="showCategory('printers')">
+            Printers
+        </button>
+
+        <button onclick="showCategory('audio')">
+            AUDIO
+        </button>
+
+        <button onclick="showCategory('stationary')">
+            Stationary
+        </button>
+
+        <button onclick="showHome()">
+            Home
+        </button>
+
+    </nav>
+
+</header>
+
+
+<!-- ACCOUNT MENU -->
+
+<div
+    id="accountMenu"
+    class="account-menu hidden"
+>
+
+    <button onclick="accountAction('create')">
+        Create Account
+    </button>
+
+    <button onclick="accountAction('login')">
+        Log In
+    </button>
+
+    <button onclick="accountAction('orders')">
+        My Order
+    </button>
+
+    <button onclick="accountAction('track')">
+        Track Order
+    </button>
+
+    <button onclick="accountAction('add')">
+        Add Account
+    </button>
+
+    <button onclick="accountAction('settings')">
+        Account Settings
+    </button>
+
+    <button onclick="logout()">
+        Log Out
+    </button>
+
+</div>
+
+
+<!-- SLIDESHOW -->
+
+<section
+    class="hero"
+    id="hero"
+>
+
+    <div class="slideshow">
+
+        <div class="slide active">
+            <img
+                src="236256678.jpeg"
+                alt="AFRITECK PLUS Slide 1"
+            >
+        </div>
+
+        <div class="slide">
+            <img
+                src="GettyImages-1165258037.jpg"
+                alt="AFRITECK PLUS Slide 2"
+            >
+        </div>
+
+        <div class="slide">
+            <img
+                src="1791133932162.png"
+                alt="AFRITECK PLUS Slide 3"
+            >
+        </div>
+
+        <div class="slide">
+            <img
+                src="936372675.jpg"
+                alt="AFRITECK PLUS Slide 4"
+            >
+        </div>
+
+        <div class="slide">
+            <img
+                src="study.jpg"
+                alt="AFRITECK PLUS Slide 5"
+            >
+        </div>
+
+        <div class="hero-text">
+
+            <div>
+
+                <h1>
+                    AFRITECK PLUS
+                </h1>
+
+                <p>
+                    the easiest way to find your Device or Stationary
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<main class="container">
+
+    <h2
+        class="section-title"
+        id="categoryTitle"
+    >
+        All Products
+    </h2>
+
+    <div
+        id="products"
+        class="product-grid"
+    ></div>
+
+</main>
+
+
+<!-- GENERAL MODAL -->
+
+<div
+    id="modal"
+    class="modal hidden"
+>
+
+    <div
+        id="modalBox"
+        class="modal-box"
+    ></div>
+
+</div>
+
+
+<!-- BEAUTIFUL MESSAGE -->
+
+<div
+    id="messageOverlay"
+    class="message-overlay hidden"
+>
+
+    <div class="message-box">
+
+        <div class="message-top">
+
+            <h3 id="messageTitle">
+                AFRITECK PLUS
+            </h3>
+
+        </div>
+
+        <div
+            class="message-content"
+            id="messageText"
+        ></div>
+
+        <button
+            class="message-ok"
+            onclick="closeMessage()"
+        >
+            OK
+        </button>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <strong>
+        AFRITECK PLUS
+    </strong>
+
+    <br><br>
+
+    The easiest way to find your Device or Stationary
+
+    <br><br>
+
+    WhatsApp:
+    084 218 0202
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+const products = [
+
+{
+    id:"p1",
+    category:"phones",
+    name:"Samsung Galaxy A15 64GB",
+    price:2999,
+    image:"SAMSUNGA15.jpg",
+    description:"Samsung Galaxy A15 64GB smartphone.",
+    box:"1× Type C to Type C cable.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p2",
+    category:"phones",
+    name:"Samsung A16 128GB",
+    price:3200,
+    image:"59782954.jpeg",
+    description:"Samsung A16 128GB smartphone.",
+    box:"1× Type C to Type C cable.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p3",
+    category:"phones",
+    name:"Samsung A05",
+    price:1999,
+    image:"209062819.jpeg",
+    description:"Samsung A05 smartphone.",
+    box:"1× Type C to Type C cable.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p4",
+    category:"phones",
+    name:"Samsung A25",
+    price:4499,
+    image:"76542w4u.jpg",
+    description:"Samsung A25 smartphone.",
+    box:"1× Type C to Type C cable.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p5",
+    category:"phones",
+    name:"Samsung A55",
+    price:7999,
+    image:"A55_4iWFDWb-Wb.jpeg",
+    description:"Samsung A55 smartphone.",
+    box:"1× Type C to Type C cable.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p6",
+    category:"phones",
+    name:"iPhone 13 128GB Black",
+    price:12999,
+    image:"220005041.jpeg",
+    description:"iPhone 13 128GB.",
+    box:"Charger included.",
+    colors:["Black","White","Red","Light Blue","Gray"]
+},
+
+{
+    id:"p7",
+    category:"phones",
+    name:"iPhone 11 128GB",
+    price:7999,
+    image:"99966644433.jpeg",
+    description:"iPhone 11 128GB.",
+    box:"Charger included.",
+    colors:["Black","White","Red","Light Blue","Gray"]
+},
+
+{
+    id:"p8",
+    category:"phones",
+    name:"iPhone 7 32GB",
+    price:2499,
+    image:"630634326.jpeg",
+    description:"iPhone 7 32GB.",
+    box:"Charger included.",
+    colors:["Black","White","Red","Light Blue","Gray"]
+},
+
+{
+    id:"p9",
+    category:"phones",
+    name:"iPhone XR 64GB",
+    price:5999,
+    image:"744638734.jpeg",
+    description:"iPhone XR 64GB.",
+    box:"Charger included.",
+    colors:["Black","White","Red","Light Blue","Gray"]
+},
+
+{
+    id:"p10",
+    category:"phones",
+    name:"iPhone 15 128GB",
+    price:18999,
+    image:"6633997.jpeg",
+    description:"iPhone 15 128GB.",
+    box:"Charger included.",
+    colors:["Black","White","Red","Light Blue","Gray"]
+},
+
+{
+    id:"p11",
+    category:"phones",
+    name:"Huawei Nova Y63",
+    price:2799,
+    image:"99556644.png",
+    description:"Huawei Nova Y63 smartphone.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p12",
+    category:"phones",
+    name:"Huawei Nova Y72",
+    price:3499,
+    image:"11246289.jpeg",
+    description:"Huawei Nova Y72 smartphone.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p13",
+    category:"phones",
+    name:"Tecno Spark 20 128GB",
+    price:2199,
+    image:"63093744.png",
+    description:"Tecno Spark 20 128GB.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p14",
+    category:"phones",
+    name:"Nokia 105 Feature Phone",
+    price:399,
+    image:"66993358.png",
+    description:"Nokia 105 Feature Phone.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p15",
+    category:"phones",
+    name:"HONOR X5B Plus",
+    price:2999,
+    image:"775300.jpg",
+    description:"HONOR X5B Plus smartphone.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p16",
+    category:"phones",
+    name:"HONOR X6a",
+    price:3299,
+    image:"6484653.jpeg",
+    description:"HONOR X6a smartphone.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"p17",
+    category:"phones",
+    name:"HONOR X7b",
+    price:4999,
+    image:"77553863.jpg",
+    description:"HONOR X7b smartphone.",
+    box:"Charger included.",
+    colors:["Black","Grey","Light Blue"]
+},
+
+{
+    id:"l1",
+    category:"laptops",
+    name:"Packard Bell McLaren C128 - 11.6 inch",
+    price:3999,
+    image:"MCLAREN-C.jpg",
+    description:"4GB RAM / 128GB Storage. 11.6 inch.",
+    box:"1× Charger. No computer bag provided."
+},
+
+{
+    id:"l2",
+    category:"laptops",
+    name:"Student Educational Laptop - 14 inch",
+    price:3999,
+    image:"jghvny7y.jpg",
+    description:"6GB RAM / 128GB Storage. 1.1GHz Processor. Windows 10. 14 inch.",
+    box:"1× Charger. No computer bag provided."
+},
+
+{
+    id:"l3",
+    category:"laptops",
+    name:"Mecer Always On QA14 Q18 Octacore",
+    price:5999,
+    image:"phpThumb.jpeg",
+    description:"4GB RAM / 128GB Storage. Octacore. 14 inch Notebook.",
+    box:"1× Charger. No computer bag provided."
+},
+
+{
+    id:"l4",
+    category:"laptops",
+    name:"HP 250 G9 Intel Celeron N4020",
+    price:5499,
+    image:"tegdrtwet.jpeg",
+    description:"8GB RAM / 256GB SSD. 15.6 inch. Windows 11.",
+    box:"1× Charger. No computer bag provided."
+},
+
+{
+    id:"l5",
+    category:"laptops",
+    name:"Lenovo IdeaPad 1 - AMD Athlon Silver",
+    price:5999,
+    image:"lenovo.png",
+    description:"8GB RAM / 256GB SSD. 15.6 inch. Windows 11.",
+    box:"1× Charger. No computer bag provided."
+},
+
+{
+    id:"l6",
+    category:"laptops",
+    name:"Dell Latitude 3190 Education",
+    price:3499,
+    image:"deldhd.png",
+    description:"4GB RAM / 128GB Storage. 11.6 inch. Windows 10 Pro.",
+    box:"1× Charger. No computer bag provided."
+},
+
+{
+    id:"pr1",
+    category:"printers",
+    name:"Canon PIXMA TS3640",
+    price:1000,
+    image:"Canon-PIXMA-TS3640.jpg",
+    description:"3-in-1 Wireless Multifunction Inkjet - Print / Copy / Scan.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr2",
+    category:"printers",
+    name:"HP DeskJet 2320",
+    price:700,
+    image:"1791281002724.png",
+    description:"3-in-1 - Print / Copy / Scan.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr3",
+    category:"printers",
+    name:"HP OfficeJet 8123",
+    price:1900,
+    image:"HP-OfficeJet-Pro-8123-Bundle.jpg",
+    description:"3-in-1 Wireless Colour - Print Colour & Black and White / Copy / Scan.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr4",
+    category:"printers",
+    name:"Canon i-SENSYS MF275dw",
+    price:3999,
+    image:"MF237w_FRT_800x800.jpeg",
+    description:"LaserJet Multifunction.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr5",
+    category:"printers",
+    name:"Receipt Thermal Printer 80mm (POS-80)",
+    price:1329,
+    image:"bvxnfgjdcg.png",
+    description:"Small receipt printer.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr6",
+    category:"printers",
+    name:"HP LaserJet M110w Wireless",
+    price:1899,
+    image:"41012207_01.png",
+    description:"Monochrome Laser.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr7",
+    category:"printers",
+    name:"Canon PIXMA G3411 MegaTank",
+    price:3499,
+    image:"yhsxkjhgh.jpg",
+    description:"3-in-1 Wireless with Refillable Ink.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"pr8",
+    category:"printers",
+    name:"Epson EcoTank L3250",
+    price:3999,
+    image:"hyeruty.jpg",
+    description:"3-in-1 Wi-Fi with Ink Tanks.",
+    box:"1× Power Cable, 1× USB Cable, 2× Ink Cartridges - Black and Tri Color, 1× Manual."
+},
+
+{
+    id:"a1",
+    category:"audio",
+    name:"TWS Earbuds Wireless",
+    price:149,
+    image:"1791282228713.png",
+    description:"Mini Bluetooth Airbuds.",
+    box:"1× Charger, 1× Manual."
+},
+
+{
+    id:"a2",
+    category:"audio",
+    name:"Bluetooth Speaker Mini Bass",
+    price:199,
+    image:"1791282214409.png",
+    description:"Portable Loud Speaker.",
+    box:"1× Charger, 1× Manual."
+},
+
+{
+    id:"a3",
+    category:"audio",
+    name:"Over-Ear Bluetooth Headphones",
+    price:249,
+    image:"1791282715188.png",
+    description:"Foldable with Mic.",
+    box:"1× Charger, 1× Manual."
+},
+
+{
+    id:"a4",
+    category:"audio",
+    name:"Wired Earphones with Mic",
+    price:65,
+    image:"1791282235328.png",
+    description:"In-Ear Earphones with Mic.",
+    box:"1× Charger, 1× Manual."
+},
+
+{
+    id:"a5",
+    category:"audio",
+    name:"Gaming Headset with LED Mic",
+    price:299,
+    image:"gdtyeuy.jpg",
+    description:"For Phone / Laptop.",
+    box:"1× Charger, 1× Manual."
+},
+
+{
+    id:"s1",
+    category:"stationary",
+    name:"Typek Papers A4 - 500 sheets",
+    price:75,
+    image:"1791283207636.png",
+    description:"A4 paper, 500 sheets."
+},
+
+{
+    id:"s2",
+    category:"stationary",
+    name:"Calculator Sharp - 210",
+    price:210,
+    image:"1791283223959.png",
+    description:"For tuck shop / students maths."
+},
+
+{
+    id:"s3",
+    category:"stationary",
+    name:"Ink Refill",
+    price:300,
+    image:"1791283242059.png",
+    description:"For printer cartridges."
+},
+
+{
+    id:"s4",
+    category:"stationary",
+    name:"Exercise Book 32 pages A4",
+    price:20,
+    image:"1791283280291.png",
+    description:"A4 exercise book, 32 pages."
+},
+
+{
+    id:"s5",
+    category:"stationary",
+    name:"Exercise Book 72 pages A4",
+    price:25,
+    image:"1791283298205.png",
+    description:"A4 exercise book, 72 pages."
+},
+
+{
+    id:"s6",
+    category:"stationary",
+    name:"Exercise Book 2 Quire A4",
+    price:38,
+    image:"1791283342323.png",
+    description:"A4 exercise book, 2 Quire."
+},
+
+{
+    id:"s7",
+    category:"stationary",
+    name:"Pens 4-pack Blue",
+    price:30,
+    image:"1791283360980.png",
+    description:"Blue pens, 4-pack."
+},
+
+{
+    id:"s8",
+    category:"stationary",
+    name:"Pens 4-pack Black",
+    price:25,
+    image:"1791283382775.png",
+    description:"Black pens, 4-pack."
+},
+
+{
+    id:"s9",
+    category:"stationary",
+    name:"Pencils 4-pack",
+    price:17,
+    image:"1791283401212.png",
+    description:"Pencils, 4-pack."
+},
+
+{
+    id:"s10",
+    category:"stationary",
+    name:"Oxford Dictionary",
+    price:175,
+    image:"1791283429993.png",
+    description:"Oxford Dictionary."
+},
+
+{
+    id:"s11",
+    category:"stationary",
+    name:"Pritt Glue Stick 4-pack",
+    price:60,
+    image:"1791283451483.png",
+    description:"Pritt Glue Stick, 4-pack."
+},
+
+{
+    id:"s12",
+    category:"stationary",
+    name:"Pocket File 20 sheets",
+    price:27,
+    image:"1791283467946.png",
+    description:"Pocket File, 20 sheets."
+}
+
+];
+
+
+/* =========================================================
+   CART / ACCOUNT DATA
+========================================================= */
+
+/*
+   This part also repairs old/broken cart data.
+*/
+
+let cart = [];
+
+try{
+
+    const savedCart =
+        JSON.parse(
+            localStorage.getItem("afriteckCart") || "[]"
+        );
+
+    if(Array.isArray(savedCart)){
+
+        cart = savedCart
+            .map(item=>{
+
+                const product =
+                    products.find(
+                        p => p.id === item.id
+                    );
+
+                if(!product){
+                    return null;
+                }
+
+                return {
+
+                    id:product.id,
+
+                    name:product.name,
+
+                    price:Number(product.price),
+
+                    image:product.image,
+
+                    colour:
+                        item.colour ||
+                        item.color ||
+                        "",
+
+                    quantity:
+                        Math.max(
+                            1,
+                            Number(item.quantity) || 1
+                        )
+
+                };
+
+            })
+            .filter(Boolean);
+
+    }
+
+}
+catch(error){
+
+    cart = [];
+
+}
+
+
+let account =
+JSON.parse(
+    localStorage.getItem("afriteckAccount") || "null"
+);
+
+
+let orders =
+JSON.parse(
+    localStorage.getItem("afriteckOrders") || "[]"
+);
+
+
+/* =========================================================
+   BEAUTIFUL MESSAGE
+========================================================= */
+
+function showMessage(
+    title,
+    message
+){
+
+    document.getElementById(
+        "messageTitle"
+    ).textContent = title;
+
+
+    document.getElementById(
+        "messageText"
+    ).innerHTML = message;
+
+
+    document.getElementById(
+        "messageOverlay"
+    ).classList.remove("hidden");
+
+}
+
+
+function closeMessage(){
+
+    document.getElementById(
+        "messageOverlay"
+    ).classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function money(amount){
+
+    const number =
+        Number(amount);
+
+    if(!Number.isFinite(number)){
+
+        return "R0";
+
+    }
+
+    return "R" +
+        number.toLocaleString(
+            "en-ZA",
+            {
+                minimumFractionDigits:0,
+                maximumFractionDigits:0
+            }
+        );
+
+}
+
+
+/* =========================================================
+   SAVE CART
+========================================================= */
+
+function saveCart(){
+
+    localStorage.setItem(
+        "afriteckCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+
+}
+
+
+/* =========================================================
+   CART COUNT
+========================================================= */
+
+function updateCartCount(){
+
+    let total = 0;
+
+    cart.forEach(item=>{
+
+        const quantity =
+            Number(item.quantity);
+
+        if(
+            Number.isFinite(quantity)
+        ){
+
+            total += quantity;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "cartCount"
+    ).textContent = total;
+
+}
+
+
+/* =========================================================
+   DISPLAY PRODUCTS
+========================================================= */
+
+function renderProducts(list){
+
+    const container =
+        document.getElementById("products");
+
+    container.innerHTML = "";
+
+
+    list.forEach(product=>{
+
+        let colourHTML = "";
+
+
+        if(product.colors){
+
+            colourHTML = `
+
+                <div class="color-box">
+
+                    <label>
+                        Choose Colour
+                    </label>
+
+                    <select
+                        id="color-${product.id}"
+                    >
+
+                        ${product.colors.map(color=>`
+
+                            <option>
+                                ${color}
+                            </option>
+
+                        `).join("")}
+
+                    </select>
+
+                </div>
+
+            `;
+
+        }
+
+
+        container.innerHTML += `
+
+            <article class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                    >
+
+                </div>
+
+
+                <div class="product-info">
+
+                    <h3>
+                        ${product.name}
+                    </h3>
+
+
+                    <div class="short-description">
+
+                        ${product.description}
+
+                    </div>
+
+
+                    <div class="price">
+
+                        ${money(product.price)}
+
+                    </div>
+
+
+                    ${colourHTML}
+
+
+                    <div class="product-actions">
+
+                        <button
+                            class="view-btn"
+                            onclick="viewProduct('${product.id}')"
+                        >
+                            View Item
+                        </button>
+
+
+                        <button
+                            class="add-btn"
+                            onclick="addToCart('${product.id}')"
+                        >
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+function showCategory(category){
+
+    document.getElementById("hero")
+        .classList.add("hidden");
+
+
+    let list;
+
+
+    if(category === "all"){
+
+        list = products;
+
+        document.getElementById(
+            "categoryTitle"
+        ).textContent =
+            "All Products";
+
+    }
+
+    else{
+
+        list =
+        products.filter(
+            product =>
+            product.category === category
+        );
+
+
+        document.getElementById(
+            "categoryTitle"
+        ).textContent =
+            category.charAt(0).toUpperCase() +
+            category.slice(1);
+
+    }
+
+
+    renderProducts(list);
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function showHome(){
+
+    document.getElementById("hero")
+        .classList.remove("hidden");
+
+
+    document.getElementById(
+        "categoryTitle"
+    ).textContent =
+        "All Products";
+
+
+    renderProducts(products);
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   VIEW PRODUCT
+========================================================= */
+
+function viewProduct(id){
+
+    const product =
+        products.find(
+            p => p.id === id
+        );
+
+
+    if(!product){
+
+        showMessage(
+            "Product Error",
+            "We could not find this product. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    let colourHTML = "";
+
+
+    if(product.colors){
+
+        colourHTML = `
+
+            <div class="color-box">
+
+                <label>
+                    Choose Colour
+                </label>
+
+                <select
+                    id="detail-color-${product.id}"
+                >
+
+                    ${product.colors.map(color=>`
+
+                        <option>
+                            ${color}
+                        </option>
+
+                    `).join("")}
+
+                </select>
+
+            </div>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = `
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <div class="detail-image">
+
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+        </div>
+
+
+        <h2>
+            ${product.name}
+        </h2>
+
+
+        <div class="price">
+            ${money(product.price)}
+        </div>
+
+
+        <p>
+            ${product.description}
+        </p>
+
+
+        <p>
+            <strong>
+                What is in the box:
+            </strong>
+            <br>
+            ${product.box || "Product as described above."}
+        </p>
+
+
+        ${colourHTML}
+
+
+        <button
+            class="form-btn"
+            onclick="addDetailProductToCart('${product.id}')"
+        >
+            Add to Cart
+        </button>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   COLOUR
+========================================================= */
+
+function getColour(id,detail=false){
+
+    const element =
+        document.getElementById(
+            detail
+            ? "detail-color-"+id
+            : "color-"+id
+        );
+
+
+    if(element){
+
+        return element.value;
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   ADD TO CART
+========================================================= */
+
+function addToCart(id){
+
+    const product =
+        products.find(
+            p => p.id === id
+        );
+
+
+    if(!product){
+
+        showMessage(
+            "Something Went Wrong",
+            "We could not add this item to your cart. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    let colour = "";
+
+
+    if(product.colors){
+
+        colour =
+            getColour(id);
+
+    }
+
+
+    let existing =
+        cart.find(
+            item =>
+            item.id === id &&
+            item.colour === colour
+        );
+
+
+    if(existing){
+
+        existing.quantity =
+            Number(existing.quantity) + 1;
+
+    }
+
+    else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            price:Number(product.price),
+
+            image:product.image,
+
+            colour:colour,
+
+            quantity:1
+
+        });
+
+    }
+
+
+    saveCart();
+
+
+    showMessage(
+        "Added to Cart",
+        `<strong>${product.name}</strong><br><br>
+         Your item has been successfully added to your cart.`
+    );
+
+}
+
+
+/* =========================================================
+   ADD DETAIL PRODUCT
+========================================================= */
+
+function addDetailProductToCart(id){
+
+    const product =
+        products.find(
+            p => p.id === id
+        );
+
+
+    if(!product){
+
+        showMessage(
+            "Something Went Wrong",
+            "We could not add this item to your cart. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    let colour = "";
+
+
+    if(product.colors){
+
+        colour =
+            getColour(id,true);
+
+    }
+
+
+    let existing =
+        cart.find(
+            item =>
+            item.id === id &&
+            item.colour === colour
+        );
+
+
+    if(existing){
+
+        existing.quantity =
+            Number(existing.quantity) + 1;
+
+    }
+
+    else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            price:Number(product.price),
+
+            image:product.image,
+
+            colour:colour,
+
+            quantity:1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    closeModal();
+
+
+    showMessage(
+        "Added to Cart",
+        `<strong>${product.name}</strong><br><br>
+         Your item has been successfully added to your cart.`
+    );
+
+}
+
+
+/* =========================================================
+   OPEN CART
+========================================================= */
+
+function openCart(){
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = `
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+        <h2>
+            Your Cart
+        </h2>
+
+        <div id="cartContent"></div>
+
+    `;
+
+
+    openModal();
+
+    renderCart();
+
+}
+
+
+/* =========================================================
+   CART TOTAL
+========================================================= */
+
+function calculateCartTotal(){
+
+    let total = 0;
+
+
+    cart.forEach(item=>{
+
+        const price =
+            Number(item.price);
+
+        const quantity =
+            Number(item.quantity);
+
+
+        if(
+            Number.isFinite(price) &&
+            Number.isFinite(quantity)
+        ){
+
+            total +=
+                price * quantity;
+
+        }
+
+    });
+
+
+    return total;
+
+}
+
+
+/* =========================================================
+   RENDER CART
+========================================================= */
+
+function renderCart(){
+
+    const container =
+        document.getElementById(
+            "cartContent"
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    if(cart.length === 0){
+
+        container.innerHTML = `
+
+            <p>
+                Your cart is empty.
+            </p>
+
+
+            <button
+                class="form-btn"
+                onclick="closeModal()"
+            >
+                Continue Shopping
+            </button>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+        <div class="cart-list">
+    `;
+
+
+    cart.forEach((item,index)=>{
+
+        const product =
+            products.find(
+                p => p.id === item.id
+            );
+
+
+        /*
+           IMPORTANT:
+           Always use the real product data.
+           This prevents "undefined".
+        */
+
+        const productName =
+            product
+            ? product.name
+            : (
+                item.name ||
+                "Product"
+            );
+
+
+        const productPrice =
+            product
+            ? Number(product.price)
+            : Number(item.price);
+
+
+        const quantity =
+            Math.max(
+                1,
+                Number(item.quantity) || 1
+            );
+
+
+        html += `
+
+            <div class="cart-row">
+
+                <div>
+
+                    <strong>
+                        ${productName}
+                    </strong>
+
+                    ${
+                        item.colour
+                        ?
+                        `<br>Colour: ${item.colour}`
+                        :
+                        ""
+                    }
+
+                    <br>
+
+                    ${money(productPrice)}
+                    each
+
+                </div>
+
+
+                <div class="quantity">
+
+                    <button
+                        onclick="changeQuantity(${index},-1)"
+                    >
+                        −
+                    </button>
+
+
+                    <strong>
+                        ${quantity}
+                    </strong>
+
+
+                    <button
+                        onclick="changeQuantity(${index},1)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    const total =
+        calculateCartTotal();
+
+
+    html += `
+
+        </div>
+
+
+        <div class="total">
+
+            Total:
+            ${money(total)}
+
+        </div>
+
+
+        <div class="cart-actions">
+
+            <button
+                class="form-btn"
+                onclick="checkoutPayment()"
+            >
+                Checkout
+            </button>
+
+
+            <button
+                class="form-btn black-btn"
+                onclick="eftPayment()"
+            >
+                Pay with EFT
+            </button>
+
+
+            <button
+                class="form-btn black-btn"
+                onclick="closeModal()"
+            >
+                Continue Shopping
+            </button>
+
+        </div>
+    `;
+
+
+    container.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+function changeQuantity(index,change){
+
+    if(!cart[index]){
+
+        return;
+
+    }
+
+
+    const current =
+        Number(cart[index].quantity) || 1;
+
+
+    cart[index].quantity =
+        current + change;
+
+
+    if(cart[index].quantity <= 0){
+
+        cart.splice(index,1);
+
+    }
+
+
+    saveCart();
+
+    renderCart();
+
+}
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+function checkoutPayment(){
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = `
+
+        <button
+            class="close"
+            onclick="openCart()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            Checkout
+        </h2>
+
+
+        <div class="warning-box">
+
+            <strong>
+                Important:
+            </strong>
+
+            If you pay less than the required amount,
+            we cannot process your order and your funds
+            will be automatically refunded to your account.
+
+        </div>
+
+
+        <p>
+
+            Please use the email address you used to log in
+            as your payment reference.
+
+        </p>
+
+
+        <button
+            class="form-btn"
+            onclick="proceedYoco()"
+        >
+            Proceed
+        </button>
+
+
+        <button
+            class="form-btn black-btn"
+            onclick="openCart()"
+        >
+            Cancel
+        </button>
+
+    `;
+
+}
+
+
+/* =========================================================
+   YOCO
+========================================================= */
+
+function proceedYoco(){
+
+    if(!account){
+
+        showMessage(
+            "Login Required",
+            "Please create an account or log in before proceeding with your payment."
+        );
+
+        return;
+
+    }
+
+
+    window.open(
+        "https://pay.yoco.com/afriteck",
+        "_blank"
+    );
+
+
+    createOrder("Yoco");
+
+}
+
+
+/* =========================================================
+   UNIQUE EFT REFERENCE
+========================================================= */
+
+function createReference(){
+
+    let reference;
+
+
+    do{
+
+        reference =
+            "AF202603" +
+            Math.floor(
+                1000 +
+                Math.random()*9000
+            );
+
+    }
+
+    while(
+        orders.some(
+            order =>
+            order.reference === reference
+        )
+    );
+
+
+    return reference;
+
+}
+
+
+/* =========================================================
+   EFT
+========================================================= */
+
+function eftPayment(){
+
+    const reference =
+        createReference();
+
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = `
+
+        <button
+            class="close"
+            onclick="openCart()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            Pay with EFT
+        </h2>
+
+
+        <div class="warning-box">
+
+            <strong>
+                Important:
+            </strong>
+
+            If you pay less than the required amount,
+            we cannot process your order and your funds
+            will be automatically refunded to your account.
+
+        </div>
+
+
+        <div class="bank-box">
+
+            <strong>
+                Recipient Name:
+            </strong>
+            Afriteck
+
+            <br>
+
+            <strong>
+                Bank Name:
+            </strong>
+            Capitec Business
+
+            <br>
+
+            <strong>
+                Account Number:
+            </strong>
+            1055662855
+
+            <br>
+
+            <strong>
+                Branch Code:
+            </strong>
+            450105
+
+            <br>
+
+            <strong>
+                Reference:
+            </strong>
+
+            ${reference}
+
+        </div>
+
+
+        <p>
+
+            <strong>
+                Please save these banking details
+                before submitting your order.
+            </strong>
+
+        </p>
+
+
+        <p>
+
+            After submitting your order,
+            proceed with your EFT payment
+            using the reference above.
+
+        </p>
+
+
+        <button
+            class="form-btn"
+            onclick="createOrder('EFT','${reference}')"
+        >
+            Submit Order
+        </button>
+
+
+        <button
+            class="form-btn black-btn"
+            onclick="openCart()"
+        >
+            Cancel
+        </button>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CREATE ORDER
+========================================================= */
+
+function createOrder(
+    paymentMethod,
+    reference=""
+){
+
+    if(!account){
+
+        showMessage(
+            "Login Required",
+            "Please create an account or log in before placing your order."
+        );
+
+        return;
+
+    }
+
+
+    if(cart.length === 0){
+
+        showMessage(
+            "Your Cart Is Empty",
+            "Please add at least one item to your cart before placing an order."
+        );
+
+        return;
+
+    }
+
+
+    const total =
+        calculateCartTotal();
+
+
+    if(total <= 0){
+
+        showMessage(
+            "Cart Error",
+            "We could not calculate your order total. Please remove the items and add them to your cart again."
+        );
+
+        return;
+
+    }
+
+
+    if(!reference){
+
+        reference =
+            "AF" +
+            Date.now()
+                .toString()
+                .slice(-8);
+
+    }
+
+
+    const order = {
+
+        id:Date.now(),
+
+        reference:reference,
+
+        date:new Date()
+            .toLocaleString(),
+
+        customer:{
+
+            name:account.name,
+
+            surname:account.surname,
+
+            email:account.email,
+
+            address:account.address
+
+        },
+
+        items:JSON.parse(
+            JSON.stringify(cart)
+        ),
+
+        total:Number(total),
+
+        paymentMethod:paymentMethod,
+
+        status:"Payment Pending"
+
+    };
+
+
+    orders.unshift(order);
+
+
+    localStorage.setItem(
+        "afriteckOrders",
+        JSON.stringify(orders)
+    );
+
+
+    sendWhatsApp(order);
+
+
+    cart = [];
+
+
+    saveCart();
+
+
+    closeModal();
+
+
+    showMessage(
+        "Order Submitted Successfully",
+        "Your order has been submitted successfully. Thank you for shopping with AFRITECK PLUS."
+    );
+
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+function sendWhatsApp(order){
+
+    let itemText = "";
+
+
+    order.items.forEach(item=>{
+
+        itemText +=
+            item.name +
+            " x" +
+            item.quantity;
+
+
+        if(item.colour){
+
+            itemText +=
+                " - " +
+                item.colour;
+
+        }
+
+
+        itemText += "\n";
+
+    });
+
+
+    const message =
+
+`AFRITECK PLUS ORDER
+
+Reference:
+${order.reference}
+
+Customer:
+${order.customer.name}
+${order.customer.surname}
+
+Email:
+${order.customer.email}
+
+Delivery Address:
+${order.customer.address}
+
+Items:
+${itemText}
+
+Total:
+${money(order.total)}
+
+Payment Method:
+${order.paymentMethod}`;
+
+
+    const whatsappURL =
+        "https://wa.me/27842180202?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   ACCOUNT MENU
+========================================================= */
+
+function toggleAccountMenu(){
+
+    document.getElementById(
+        "accountMenu"
+    ).classList.toggle("hidden");
+
+}
+
+
+/* =========================================================
+   ACCOUNT ACTION
+========================================================= */
+
+function accountAction(action){
+
+    document.getElementById(
+        "accountMenu"
+    ).classList.add("hidden");
+
+
+    if(action === "create"){
+
+        showAccountForm(false);
+
+    }
+
+
+    if(action === "login"){
+
+        showAccountForm(true);
+
+    }
+
+
+    if(action === "add"){
+
+        showAccountForm(true);
+
+    }
+
+
+    if(action === "orders"){
+
+        showOrders();
+
+    }
+
+
+    if(action === "track"){
+
+        showTrackOrder();
+
+    }
+
+
+    if(action === "settings"){
+
+        showAccountSettings();
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE / LOGIN
+========================================================= */
+
+function showAccountForm(login){
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = `
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            ${login ? "Log In" : "Create Account"}
+        </h2>
+
+
+        <form
+            onsubmit="saveAccount(event,${login})"
+        >
+
+            ${
+                login
+                ?
+                ""
+                :
+                `
+
+                <input
+                    id="accountName"
+                    placeholder="Name"
+                    required
+                >
+
+
+                <input
+                    id="accountSurname"
+                    placeholder="Surname"
+                    required
+                >
+
+
+                <input
+                    id="accountAddress"
+                    placeholder="Delivery Address"
+                    required
+                >
+
+                `
+            }
+
+
+            <input
+                id="accountEmail"
+                type="email"
+                placeholder="Email"
+                required
+            >
+
+
+            <input
+                id="accountPassword"
+                type="password"
+                placeholder="Password"
+                required
+            >
+
+
+            ${
+                login
+                ?
+                ""
+                :
+                `
+
+                <input
+                    id="accountConfirm"
+                    type="password"
+                    placeholder="Confirm Password"
+                    required
+                >
+
+                `
+            }
+
+
+            <button
+                class="form-btn"
+                type="submit"
+            >
+
+                ${login
+                ? "Log In"
+                : "Create Account"}
+
+            </button>
+
+        </form>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   SAVE ACCOUNT
+========================================================= */
+
+function saveAccount(event,login){
+
+    event.preventDefault();
+
+
+    const email =
+        document.getElementById(
+            "accountEmail"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "accountPassword"
+        ).value;
+
+
+    if(login){
+
+        if(
+            !account ||
+            account.email !== email ||
+            account.password !== password
+        ){
+
+            showMessage(
+                "Login Unsuccessful",
+                "The email address or password is incorrect. Please check your details and try again."
+            );
+
+            return;
+
+        }
+
+
+        closeModal();
+
+
+        showMessage(
+            "Welcome Back",
+            "You have logged in successfully."
+        );
+
+
+        return;
+
+    }
+
+
+    const confirmPassword =
+        document.getElementById(
+            "accountConfirm"
+        ).value;
+
+
+    if(password !== confirmPassword){
+
+        showMessage(
+            "Password Mismatch",
+            "The passwords do not match. Please enter the same password in both fields."
+        );
+
+        return;
+
+    }
+
+
+    account = {
+
+        name:
+            document.getElementById(
+                "accountName"
+            ).value,
+
+        surname:
+            document.getElementById(
+                "accountSurname"
+            ).value,
+
+        email:email,
+
+        address:
+            document.getElementById(
+                "accountAddress"
+            ).value,
+
+        password:password
+
+    };
+
+
+    localStorage.setItem(
+        "afriteckAccount",
+        JSON.stringify(account)
+    );
+
+
+    closeModal();
+
+
+    showMessage(
+        "Account Created Successfully",
+        "Your AFRITECK PLUS account has been created successfully. You can now log in and place your order."
+    );
+
+}
+
+
+/* =========================================================
+   MY ORDERS
+========================================================= */
+
+function showOrders(){
+
+    let html = `
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            My Orders
+        </h2>
+
+    `;
+
+
+    if(orders.length === 0){
+
+        html += `
+
+            <p>
+                You do not have any orders yet.
+            </p>
+
+        `;
+
+    }
+
+
+    orders.forEach(order=>{
+
+        html += `
+
+            <div class="order-box">
+
+                <strong>
+                    Reference:
+                </strong>
+
+                ${order.reference}
+
+                <br>
+
+                <strong>
+                    Date:
+                </strong>
+
+                ${order.date}
+
+                <br>
+
+                <strong>
+                    Total:
+                </strong>
+
+                ${money(order.total)}
+
+                <br>
+
+                <strong>
+                    Status:
+                </strong>
+
+                ${order.status}
+
+                <br><br>
+
+
+                ${
+                    order.status ===
+                    "Cancelled - Refund to original payment method"
+                    ?
+                    ""
+                    :
+                    `
+
+                    <button
+                        class="form-btn"
+                        onclick="cancelOrder(${order.id})"
+                    >
+                        Cancel Order
+                    </button>
+
+                    `
+                }
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = html;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   CANCEL ORDER
+========================================================= */
+
+function cancelOrder(id){
+
+    const order =
+        orders.find(
+            o => o.id === id
+        );
+
+
+    if(!order){
+
+        return;
+
+    }
+
+
+    showMessage(
+        "Cancel Order?",
+        "Are you sure you want to cancel this order? If it is cancelled before delivery, the funds will be refunded to the original payment method."
+    );
+
+
+    const oldOK =
+        document.querySelector(
+            ".message-ok"
+        );
+
+
+    oldOK.onclick = function(){
+
+        order.status =
+            "Cancelled - Refund to original payment method";
+
+
+        localStorage.setItem(
+            "afriteckOrders",
+            JSON.stringify(orders)
+        );
+
+
+        closeMessage();
+
+        showOrders();
+
+
+        setTimeout(
+            function(){
+
+                showMessage(
+                    "Order Cancelled",
+                    "Your order has been cancelled successfully. The refund will be directed to the original payment method."
+                );
+
+            },
+            200
+        );
+
+    };
+
+}
+
+
+/* =========================================================
+   TRACK ORDER
+========================================================= */
+
+function showTrackOrder(){
+
+    let html = `
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            Track Order
+        </h2>
+
+    `;
+
+
+    if(orders.length === 0){
+
+        html += `
+
+            <p>
+                There is no order processed yet.
+            </p>
+
+        `;
+
+    }
+
+    else{
+
+        const latest =
+            orders[0];
+
+
+        html += `
+
+            <p>
+                Your latest order:
+            </p>
+
+
+            <div class="order-box">
+
+                <strong>
+                    Reference:
+                </strong>
+
+                ${latest.reference}
+
+                <br><br>
+
+                <strong>
+                    Status:
+                </strong>
+
+                ${latest.status}
+
+            </div>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = html;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   ACCOUNT SETTINGS
+========================================================= */
+
+function showAccountSettings(){
+
+    if(!account){
+
+        showMessage(
+            "Login Required",
+            "Please log in to your account before opening Account Settings."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "modalBox"
+    ).innerHTML = `
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+
+        <h2>
+            Account Settings
+        </h2>
+
+
+        <form
+            onsubmit="updateAccount(event)"
+        >
+
+            <input
+                id="settingsName"
+                value="${account.name}"
+                placeholder="Name"
+                required
+            >
+
+
+            <input
+                id="settingsSurname"
+                value="${account.surname}"
+                placeholder="Surname"
+                required
+            >
+
+
+            <input
+                id="settingsEmail"
+                type="email"
+                value="${account.email}"
+                placeholder="Email"
+                required
+            >
+
+
+            <input
+                id="settingsAddress"
+                value="${account.address}"
+                placeholder="Delivery Address"
+                required
+            >
+
+
+            <input
+                id="settingsPassword"
+                type="password"
+                value="${account.password}"
+                placeholder="Password"
+                required
+            >
+
+
+            <button
+                class="form-btn"
+                type="submit"
+            >
+                Save Changes
+            </button>
+
+
+            <button
+                class="form-btn black-btn"
+                type="button"
+                onclick="DarkMode()"
+            >
+                 Dark Mode
+            </button>
+
+        </form>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   UPDATE ACCOUNT
+========================================================= */
+
+function updateAccount(event){
+
+    event.preventDefault();
+
+
+    account.name =
+        document.getElementById(
+            "settingsName"
+        ).value;
+
+
+    account.surname =
+        document.getElementById(
+            "settingsSurname"
+        ).value;
+
+
+    account.email =
+        document.getElementById(
+            "settingsEmail"
+        ).value;
+
+
+    account.address =
+        document.getElementById(
+            "settingsAddress"
+        ).value;
+
+
+    account.password =
+        document.getElementById(
+            "settingsPassword"
+        ).value;
+
+
+    localStorage.setItem(
+        "afriteckAccount",
+        JSON.stringify(account)
+    );
+
+
+    closeModal();
+
+
+    showMessage(
+        "Settings Updated Successfully",
+        "Your account settings have been updated successfully."
+    );
+
+}
+
+
+/* =========================================================
+   LOG OUT
+========================================================= */
+
+function logout(){
+
+    account = null;
+
+
+    localStorage.removeItem(
+        "afriteckAccount"
+    );
+
+
+    document.getElementById(
+        "accountMenu"
+    ).classList.add("hidden");
+
+
+    showMessage(
+        "Logged Out",
+        "You have been logged out successfully. You can log in again whenever you are ready."
+    );
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function DarkMode(){
+
+    document.body.classList.toggle(
+        "dark"
+    );
+
+
+    localStorage.setItem(
+        "afriteckDark",
+        document.body.classList.contains("dark")
+    );
+
+
+    /*
+       Close settings and show a clear message.
+    */
+
+    closeModal();
+
+
+    const mode =
+        document.body.classList.contains("dark")
+        ? "Dark mode"
+        : "Light mode";
+
+
+    showMessage(
+        "Display Updated",
+        `${mode} has been enabled successfully.`
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("hidden");
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.add("hidden");
+
+}
+
+
+/* =========================================================
+   SLIDESHOW
+========================================================= */
+
+let slideIndex = 0;
+
+
+setInterval(function(){
+
+    const slides =
+        document.querySelectorAll(
+            ".slide"
+        );
+
+
+    if(slides.length === 0){
+
+        return;
+
+    }
+
+
+    slides[slideIndex]
+        .classList.remove("active");
+
+
+    slideIndex =
+        (slideIndex + 1) %
+        slides.length;
+
+
+    slides[slideIndex]
+        .classList.add("active");
+
+},6000);
+
+
+/* =========================================================
+   START WEBSITE
+========================================================= */
+
+renderProducts(products);
+
+updateCartCount();
+
+
+/* RESTORE DARK MODE */
+
+if(
+    localStorage.getItem(
+        "afriteckDark"
+    ) === "true"
+){
+
+    document.body.classList.add(
+        "dark"
+    );
+
+}
+
+
+/* =========================================================
+   REMOVE LOADER
+========================================================= */
+
+window.addEventListener(
+    "load",
+    function(){
+
+        setTimeout(
+            function(){
+
+                document.getElementById(
+                    "loader"
+                ).style.display = "none";
+
+            },
+            500
+        );
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE ACCOUNT MENU
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        const menu =
+            document.getElementById(
+                "accountMenu"
+            );
+
+
+        const button =
+            event.target.closest(
+                ".options"
+            );
+
+
+        if(
+            !menu.contains(event.target) &&
+            !button
+        ){
+
+            menu.classList.add(
+                "hidden"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE MODAL BACKGROUND
+========================================================= */
+
+document.getElementById("modal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target.id === "modal"
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   CLOSE MESSAGE WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.getElementById("messageOverlay")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target.id ===
+                "messageOverlay"
+            ){
+
+                closeMessage();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
